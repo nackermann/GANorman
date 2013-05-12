@@ -17,8 +17,12 @@ public:
 	void setDirection(Direction direction);
 	Direction& getDirection(void);
 
+	void setHydrophob(bool state);
+	bool isHydrophob(void);
+
 private:
 	Direction m_Direction;
+	bool m_isHydrophob;		// hydrophob = "black"
 };
 
 #endif

@@ -12,6 +12,8 @@ public:
 	Population();
 	~Population();
 
+	void createRandomFoldings(std::string& sequence);
+
 	void browse(std::ostream &outputStream);
 
 private:

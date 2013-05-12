@@ -1,11 +1,18 @@
 #include "folding.h"
 
-Folding::Folding()
+
+Folding::Folding(std::string &sequence)
 {
-	for (int i = 0; i < 5; ++i) // mal ein paar reinwerfen
+	srand (time(NULL));
+
+	for (unsigned int i = 0; i < sequence.size(); ++i) // mal ein paar reinwerfen
 	{
 		Element newElement;
-		newElement.setDirection(Right);
+		newElement.setDirection(static_cast<Direction>(rand()%3));
+		if (sequence.at(i)=='1')
+		{
+			newElement.setHydrophob(true);
+		}
 		m_Elements.push_back(newElement);
 	}
 

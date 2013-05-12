@@ -3,13 +3,16 @@
 
 #include <vector>
 #include <ostream>
+#include <string>
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
 
 #include "element.h"
 
 class Folding
 {
 public:
-	Folding();
+	Folding(std::string &sequence);
 	~Folding();
 
 	void browse(std::ostream &outputStream);

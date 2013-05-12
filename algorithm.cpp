@@ -8,7 +8,12 @@ Algorithm::~Algorithm()
 {
 }
 
-void Algorithm::run(void) 
+void Algorithm::run(std::string& sequence) 
 {
+	m_Population.createRandomFoldings(sequence);
+}
 
+void Algorithm::browsePopulation(std::ostream &outputStream) 
+{
+	m_Population.browse(outputStream);
 }
