@@ -47,6 +47,9 @@ void Folding::browse(std::ostream &outputStream)
 		{
 			outputStream << "White - Hydrophil(0) ";
 		}
+
+		outputStream << m_Elements.at(i).getPosition().x << "/" << m_Elements.at(i).getPosition().y;
+
 		outputStream << std::endl;
 	}
 }
@@ -58,13 +61,13 @@ int Folding::calculateFitness(void)
 
 void Folding::createMatrix(void) 
 {
-	for (unsigned int i = 0; i < m_Elements.size(); ++i)
+	for (unsigned int i = 0; i < m_Elements.size()-1; ++i)
 	{
 		Vector2i position;
 		ViewingDirection viewingDirection = m_Elements.at(i).getViewingDirection();
 		Direction direction = m_Elements.at(i).getDirection();
 
-		if (i==0)
+		/*if (i==0) // Brauch ich garnicht
 		{
 			if (direction == Straight)
 			{
@@ -83,8 +86,8 @@ void Folding::createMatrix(void)
 				position.y += 1;
 			}
 			m_Elements.at(i+1).setPosition(position);
-			return;
-		}
+			continue;
+		}*/
 
 		
 		if (viewingDirection == East && direction == Straight)
