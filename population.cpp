@@ -17,9 +17,9 @@ void Population::browse(std::ostream &outputStream)
 	}
 }
 
-void Population::createRandomFoldings(std::string& sequence) // Noch übergeben wie viele
+void Population::createRandomFolding(std::string& sequence)
 {
 	Folding newFolding(sequence);
 
-	m_Foldings.push_back(newFolding); // Nur eins erstmal gemacht !
+	m_Foldings.push_back(newFolding);
 }

@@ -2,15 +2,19 @@
 
 Algorithm::Algorithm()
 {
+	srand (static_cast<unsigned int>(time(NULL)));
 }
 
 Algorithm::~Algorithm()
 {
 }
 
-void Algorithm::run(std::string& sequence) 
+void Algorithm::run(std::string& sequence, unsigned int populationSize) 
 {
-	m_Population.createRandomFoldings(sequence);
+	for (unsigned int i = 0; i < populationSize; ++i)
+	{
+		m_Population.createRandomFolding(sequence);
+	}
 }
 
 void Algorithm::browsePopulation(std::ostream &outputStream) 

@@ -26,7 +26,7 @@ int main()
 	
 	Algorithm myAlgorithm;
 
-	myAlgorithm.run(SEQ20);
+	myAlgorithm.run(SEQ20,100);
 
 	myAlgorithm.browsePopulation(std::cout);
 

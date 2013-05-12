@@ -3,9 +3,7 @@
 
 Folding::Folding(std::string &sequence)
 {
-	srand (time(NULL));
-
-	for (unsigned int i = 0; i < sequence.size(); ++i) // mal ein paar reinwerfen
+	for (unsigned int i = 0; i < sequence.size(); ++i)
 	{
 		Element newElement;
 		newElement.setDirection(static_cast<Direction>(rand()%3));
@@ -26,6 +24,28 @@ void Folding::browse(std::ostream &outputStream)
 {
 	for (unsigned int i=0;i<m_Elements.size();++i)
 	{
-		outputStream << m_Elements.at(i).getDirection() << std::endl;
+		//outputStream << m_Elements.at(i).getDirection() << " ";
+		if (m_Elements.at(i).getDirection()==Left)
+		{
+			outputStream << "Links ";
+		}
+		else if (m_Elements.at(i).getDirection()==Right)
+		{
+			outputStream << "Rechts ";
+		}
+		else
+		{
+			outputStream << "Geradeaus ";
+		}
+
+		if (m_Elements.at(i).isHydrophob())
+		{
+			outputStream << "Black - Hydrophob(1) ";
+		}
+		else
+		{
+			outputStream << "White - Hydrophil(0) ";
+		}
+		outputStream << std::endl;
 	}
 }
