@@ -16,6 +16,8 @@ public:
 	~Folding();
 
 	void browse(std::ostream &outputStream);
+	int calculateFitness(void);
+	void createMatrix(void);
 
 private:
 	std::vector<Element> m_Elements;
