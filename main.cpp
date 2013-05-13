@@ -3,6 +3,14 @@
 
 #include "algorithm.h"
 
+#ifdef __APPLE__
+#include <OpenGL/gl.h>
+#include <OpenGl/glu.h>
+#include <GLUT/glut.h>
+#else
+#include <GL/freeglut.h>
+#endif
+
 
 //#include "folding.h"
 //#include "population.h"
@@ -26,7 +34,7 @@ int main()
 	
 	Algorithm myAlgorithm;
 
-	myAlgorithm.run(SEQ20,100);
+	myAlgorithm.run(SEQ20,10);
 
 	myAlgorithm.browsePopulation(std::cout);
 

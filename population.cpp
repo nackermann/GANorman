@@ -21,7 +21,5 @@ void Population::createRandomFolding(std::string& sequence)
 {
 	Folding newFolding(sequence);
 
-	newFolding.createMatrix();
-
 	m_Foldings.push_back(newFolding);
 }

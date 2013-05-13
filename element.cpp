@@ -3,7 +3,8 @@
 Element::Element()
 	: m_Direction(Left), 
 	m_isHydrophob(false),
-	m_ViewingDirection(East)
+	m_ViewingDirection(East),
+	m_Index(0)
 {
 }
 
@@ -49,4 +50,14 @@ void Element::setViewingDirection(ViewingDirection viewingDirection)
 ViewingDirection& Element::getViewingDirection(void) 
 {
 	return m_ViewingDirection;
+}
+
+void Element::setIndex(int indexValue) 
+{
+	m_Index = indexValue;
+}
+
+int Element::getIndex(void) 
+{
+	return m_Index;
 }

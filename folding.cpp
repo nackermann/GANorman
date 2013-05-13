@@ -2,6 +2,8 @@
 
 
 Folding::Folding(std::string &sequence)
+	: m_Fitness(0),
+	m_Overlaps(0)
 {
 	for (unsigned int i = 0; i < sequence.size(); ++i)
 	{
@@ -15,17 +17,25 @@ Folding::Folding(std::string &sequence)
 		m_Elements.push_back(newElement);
 	}
 
+	createMatrix();
+	calculateOverlaps();
+	calculateFitness();
+	
 }
 
 Folding::~Folding()
 {
 }
 
+int Folding::getFitness(void) 
+{
+	return m_Fitness;
+}
+
 void Folding::browse(std::ostream &outputStream) 
 {
 	for (unsigned int i=0;i<m_Elements.size();++i)
 	{
-		//outputStream << m_Elements.at(i).getDirection() << " ";
 		if (m_Elements.at(i).getDirection()==Left)
 		{
 			outputStream << "Links ";
@@ -49,14 +59,57 @@ void Folding::browse(std::ostream &outputStream)
 		}
 
 		outputStream << m_Elements.at(i).getPosition().x << "/" << m_Elements.at(i).getPosition().y;
-
+		outputStream << " Index: " << m_Elements.at(i).getIndex();
 		outputStream << std::endl;
 	}
+	outputStream << "Overlaps: " << m_Overlaps << std::endl;
+	outputStream << "Fitness: " << m_Fitness << std::endl;
 }
 
-int Folding::calculateFitness(void) 
+void Folding::calculateFitness(void) 
 {
-	return 1; // bla
+	for (unsigned int i=0; i<m_Elements.size();++i)
+	{
+		Vector2i actualPosition = m_Elements.at(i).getPosition();
+		if (m_Elements.at(i).isHydrophob())
+		{
+			for (unsigned int j = 0; j < m_Elements.size(); ++j)
+			{
+				if (i==j)
+				{
+					continue;
+				}
+				else if ((m_Elements.at(i).getIndex() == m_Elements.at(j).getIndex()+1) ||		// Auf Sequenznachbarn prüfen
+						 (m_Elements.at(i).getIndex() == m_Elements.at(j).getIndex()-1))
+				{
+					continue;
+				}
+				Vector2i position = m_Elements.at(j).getPosition();
+				if ((actualPosition.x-1 == position.x) &&			// Links schauen
+					(actualPosition.y == position.y))
+				{
+					++m_Fitness;
+				}
+				else if ((actualPosition.x+1 == position.x) &&		// Rechts schauen
+						 (actualPosition.y == position.y))
+				{
+					++m_Fitness;
+				}
+				else if ((actualPosition.y+1 == position.y) &&		// Oben schauen
+						 (actualPosition.x == position.x))
+				{
+					++m_Fitness;
+				}
+				else if ((actualPosition.y-1 == position.y) &&		// Unten schauen
+					(actualPosition.x == position.x))
+				{
+					++m_Fitness;
+				}
+
+			}
+		}
+	}
+	m_Fitness/=2; // eins zu viel?
 }
 
 void Folding::createMatrix(void) 
@@ -164,6 +217,30 @@ void Folding::createMatrix(void)
 			m_Elements.at(i+1).setViewingDirection(South);
 		}
 
+		m_Elements.at(i+1).setIndex(i+1);
 		m_Elements.at(i+1).setPosition(position);
 	}
+}
+
+void Folding::calculateOverlaps(void) 
+{
+	for (unsigned int i=0;i<m_Elements.size();++i)
+	{
+		Vector2i actualPosition = m_Elements.at(i).getPosition();
+		for (unsigned int j=0;j<m_Elements.size();++j)
+		{
+			if (i==j)
+			{
+				continue;
+			}
+			Vector2i position = m_Elements.at(j).getPosition();
+
+			if ((actualPosition.x == position.x) &&
+				(actualPosition.y == position.y))
+			{
+				++m_Overlaps;
+			}
+		}
+	}
+	m_Overlaps/=2;
 }

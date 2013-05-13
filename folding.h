@@ -15,12 +15,17 @@ public:
 	Folding(std::string &sequence);
 	~Folding();
 
+	int getFitness(void);
+
 	void browse(std::ostream &outputStream);
-	int calculateFitness(void);
+	void calculateFitness(void);
 	void createMatrix(void);
+	void calculateOverlaps(void);
 
 private:
 	std::vector<Element> m_Elements;
+	int m_Fitness;
+	int m_Overlaps;
 };
 
 #endif
