@@ -51,7 +51,6 @@ Vector3f eyePos(0,0,5);
 Vector3f centerPos(0,0,0);
 bool fullscreen = false;
 GLfloat sphereRadius = 0.25;
-float rotation = 0;
 
 Algorithm myAlgorithm;
 
@@ -103,9 +102,15 @@ void keyPressed(unsigned char key, int mousePosX, int mousePosY)
 	{
 		exit(0);
 	}
-    else if (key == 'i')
+    else if (key == 'k')
     {
-        // noch was rein machen
+        eyePos.x += 0.5;
+        eyePos.y += 0.5;
+    }
+    else if (key == 'l')
+    {
+        eyePos.x += -0.5;
+        eyePos.y += -0.5;
     }
 }
 
@@ -113,14 +118,9 @@ void Animate (int value)
 {
 	// magic
     
-    /*++rotation;
-    if (rotation>=360) {
-        rotation = 0;
-    }*/
-    
 	glutPostRedisplay();
     
-	glutTimerFunc(500, Animate, ++value); // ms  
+	glutTimerFunc(50, Animate, ++value); // ms  
 }
 
 void RenderScene()
@@ -281,9 +281,6 @@ int main(int argc, char **argv)
 	glutTimerFunc(10, Animate, 0);
     
 	init();
-
-
-
 
 	glutMainLoop();
     
