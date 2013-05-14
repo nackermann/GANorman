@@ -106,17 +106,20 @@ void keyPressed(unsigned char key, int mousePosX, int mousePosY)
 	}
     else if (key == 'k')
     {
-        //eyePos.x += 0.5;
-        //eyePos.y += 0.5;
         eyePos.z += 0.5;
-        
     }
     else if (key == 'l')
     {
-        //eyePos.x += -0.5;
-        //eyePos.y += -0.5;
         eyePos.z += -0.5;
     }
+	else if (key == 'o')
+	{
+		eyePos.y += +0.5;
+	}
+	else if (key == 'p')
+	{
+		eyePos.y += -0.5;
+	}
 }
 
 void Animate (int value)    
