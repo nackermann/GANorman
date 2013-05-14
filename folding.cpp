@@ -19,7 +19,7 @@ Folding::Folding(std::string &sequence)
 
 	createMatrix();
 	calculateOverlaps();
-	//calculateFitness();
+	calculateFitness();
 	
 }
 
