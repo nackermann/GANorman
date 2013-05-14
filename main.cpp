@@ -51,6 +51,7 @@ Vector3f eyePos(0,0,5);
 Vector3f centerPos(0,0,0);
 bool fullscreen = false;
 GLfloat sphereRadius = 0.25;
+bool toggle = false;
 
 Algorithm myAlgorithm;
 
@@ -117,6 +118,25 @@ void keyPressed(unsigned char key, int mousePosX, int mousePosY)
 void Animate (int value)    
 {
 	// magic
+
+    
+    if (eyePos.x >= 20 && eyePos.y >= 20) {
+        toggle = true;
+    }
+    else if (eyePos.x <= 0 && eyePos.y <= 0)
+    {
+        toggle = false;
+    }
+    
+    if (!toggle) {
+        ++eyePos.x;
+        ++eyePos.y;
+    }
+    else
+    {
+        --eyePos.x;
+        --eyePos.y;
+    }
     
 	glutPostRedisplay();
     
