@@ -52,6 +52,7 @@ Vector3f centerPos(0,0,0);
 bool fullscreen = false;
 GLfloat sphereRadius = 0.25;
 bool toggle = false;
+float rotation = 0;
 
 Algorithm myAlgorithm;
 
@@ -105,13 +106,16 @@ void keyPressed(unsigned char key, int mousePosX, int mousePosY)
 	}
     else if (key == 'k')
     {
-        eyePos.x += 0.5;
-        eyePos.y += 0.5;
+        //eyePos.x += 0.5;
+        //eyePos.y += 0.5;
+        eyePos.z += 0.5;
+        
     }
     else if (key == 'l')
     {
-        eyePos.x += -0.5;
-        eyePos.y += -0.5;
+        //eyePos.x += -0.5;
+        //eyePos.y += -0.5;
+        eyePos.z += -0.5;
     }
 }
 
@@ -120,7 +124,7 @@ void Animate (int value)
 	// magic
 
     
-    if (eyePos.x >= 20 && eyePos.y >= 20) {
+    /*if (eyePos.x >= 20 && eyePos.y >= 20) {
         toggle = true;
     }
     else if (eyePos.x <= 0 && eyePos.y <= 0)
@@ -136,11 +140,16 @@ void Animate (int value)
     {
         --eyePos.x;
         --eyePos.y;
+    }*/
+    
+    ++rotation;
+    if (rotation>=360) {
+        rotation = 0;
     }
     
 	glutPostRedisplay();
     
-	glutTimerFunc(50, Animate, ++value); // ms  
+	glutTimerFunc(10, Animate, ++value); // ms  
 }
 
 void RenderScene()
@@ -152,6 +161,8 @@ void RenderScene()
 	gluLookAt ( eyePos.x,  eyePos.y,  eyePos.z,
                centerPos.x,  centerPos.y,  centerPos.z, 
                0., 1., 0.);
+    
+    //glRotated(rotation, 1, 1, 1);
     
     Population myPopulation = myAlgorithm.getPopulation();
     Folding myFolding = myPopulation.getFolding(0);
@@ -252,14 +263,16 @@ void Reshape(int width, int height)
     
 	aspectRatio = (GLfloat)width/(GLfloat)height;
     
-    if (width <= height) 
+    /*if (width <= height) 
     {
         glOrtho( -2., 2., -2. / aspectRatio , 2. / aspectRatio , 0.0, 150);
     }
     else
     {
         glOrtho( -2. * aspectRatio , 2. * aspectRatio , -2., 2., 0.0, 150);
-    }
+    }*/
+    
+    gluPerspective(90.f, aspectRatio, 0.1f, 150.0f);
     
 	// Matrix f¸r Modellierung/Viewing 
 	glMatrixMode(GL_MODELVIEW);
