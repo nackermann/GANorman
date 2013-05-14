@@ -17,6 +17,11 @@ void Algorithm::run(std::string& sequence, unsigned int populationSize)
 	}
 }
 
+Population& Algorithm::getPopulation(void)
+{
+    return m_Population;
+}
+
 void Algorithm::browsePopulation(std::ostream &outputStream) 
 {
 	m_Population.browse(outputStream);

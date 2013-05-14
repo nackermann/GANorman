@@ -12,6 +12,8 @@ public:
 	~Algorithm();
 
 	void run(std::string& sequence, unsigned int populationSize);
+    
+    Population& getPopulation(void);
 
 	void browsePopulation(std::ostream &outputStream);
 

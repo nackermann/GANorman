@@ -16,6 +16,8 @@ public:
 	~Folding();
 
 	int getFitness(void);
+    Element& getElement(unsigned int index);
+    unsigned long getSize(void);
 
 	void browse(std::ostream &outputStream);
 	void calculateFitness(void);

@@ -19,7 +19,7 @@ Folding::Folding(std::string &sequence)
 
 	createMatrix();
 	calculateOverlaps();
-	calculateFitness();
+	//calculateFitness();
 	
 }
 
@@ -30,6 +30,16 @@ Folding::~Folding()
 int Folding::getFitness(void) 
 {
 	return m_Fitness;
+}
+
+Element& Folding::getElement(unsigned int index)
+{
+    return m_Elements.at(index);
+}
+
+unsigned long Folding::getSize(void)
+{
+    return m_Elements.size();
 }
 
 void Folding::browse(std::ostream &outputStream) 
@@ -86,7 +96,7 @@ void Folding::calculateFitness(void)
 				}
 				Vector2i position = m_Elements.at(j).getPosition();
 				if ((actualPosition.x-1 == position.x) &&			// Links schauen
-					(actualPosition.y == position.y))
+					(actualPosition.y == position.y))               // Auf Hydrophob Ÿberall noch checken !!
 				{
 					++m_Fitness;
 				}
@@ -109,7 +119,7 @@ void Folding::calculateFitness(void)
 			}
 		}
 	}
-	m_Fitness/=2; // eins zu viel?
+	m_Fitness/=2; // eins zu viel? -- Brauch ich das?
 }
 
 void Folding::createMatrix(void) 

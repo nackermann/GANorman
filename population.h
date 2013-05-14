@@ -13,6 +13,8 @@ public:
 	~Population();
 
 	void createRandomFolding(std::string& sequence);
+    
+    Folding& getFolding(unsigned int index);
 
 	void browse(std::ostream &outputStream);
 

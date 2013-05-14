@@ -23,3 +23,8 @@ void Population::createRandomFolding(std::string& sequence)
 
 	m_Foldings.push_back(newFolding);
 }
+
+Folding& Population::getFolding(unsigned int index)
+{
+    return m_Foldings.at(index);
+}
