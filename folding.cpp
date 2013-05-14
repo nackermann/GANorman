@@ -42,6 +42,11 @@ unsigned long Folding::getSize(void)
     return m_Elements.size();
 }
 
+int Folding::getOverlaps(void)
+{
+    return m_Overlaps;
+}
+
 void Folding::browse(std::ostream &outputStream) 
 {
 	for (unsigned int i=0;i<m_Elements.size();++i)
@@ -198,15 +203,15 @@ void Folding::createMatrix(void)
 		}
 		else if (viewingDirection == South && direction == Right)
 		{
-			position.x = m_Elements.at(i).getPosition().x + 1;
-			position.y = m_Elements.at(i).getPosition().y;
-			m_Elements.at(i+1).setViewingDirection(East);
-		}
-		else if (viewingDirection == South && direction == Left)
-		{
 			position.x = m_Elements.at(i).getPosition().x - 1;
 			position.y = m_Elements.at(i).getPosition().y;
 			m_Elements.at(i+1).setViewingDirection(West);
+		}
+		else if (viewingDirection == South && direction == Left)
+		{
+			position.x = m_Elements.at(i).getPosition().x + 1;
+			position.y = m_Elements.at(i).getPosition().y;
+			m_Elements.at(i+1).setViewingDirection(East);
 		}
 		else if (viewingDirection == West && direction == Straight)
 		{

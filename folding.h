@@ -18,6 +18,7 @@ public:
 	int getFitness(void);
     Element& getElement(unsigned int index);
     unsigned long getSize(void);
+    int getOverlaps(void);
 
 	void browse(std::ostream &outputStream);
 	void calculateFitness(void);

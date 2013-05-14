@@ -24,6 +24,11 @@ void Population::createRandomFolding(std::string& sequence)
 	m_Foldings.push_back(newFolding);
 }
 
+void Population::killPopulation(void)
+{
+    m_Foldings.clear();
+}
+
 Folding& Population::getFolding(unsigned int index)
 {
     return m_Foldings.at(index);

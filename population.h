@@ -13,6 +13,7 @@ public:
 	~Population();
 
 	void createRandomFolding(std::string& sequence);
+    void killPopulation(void);
     
     Folding& getFolding(unsigned int index);
 
