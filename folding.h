@@ -22,7 +22,7 @@ public:
 
 	void browse(std::ostream &outputStream);
 	void calculateFitness(void);
-	void createMatrix(void);
+	void calculatePositionsAndDirections(void);
 	void calculateOverlaps(void);
 
 private:

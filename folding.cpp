@@ -17,7 +17,7 @@ Folding::Folding(std::string &sequence)
 		m_Elements.push_back(newElement);
 	}
 
-	createMatrix();
+	calculatePositionsAndDirections();
 	calculateOverlaps();
 	calculateFitness();
 	
@@ -100,23 +100,27 @@ void Folding::calculateFitness(void)
 					continue;
 				}
 				Vector2i position = m_Elements.at(j).getPosition();
-				if ((actualPosition.x-1 == position.x) &&			// Links schauen
-					(actualPosition.y == position.y))               // Auf Hydrophob Ÿberall noch checken !!
+				if ((actualPosition.x-1 == position.x)	&&			// Links schauen
+					(actualPosition.y == position.y)	&&
+					(m_Elements.at(j).isHydrophob()))
 				{
 					++m_Fitness;
 				}
 				else if ((actualPosition.x+1 == position.x) &&		// Rechts schauen
-						 (actualPosition.y == position.y))
+						 (actualPosition.y == position.y)	&&
+						 (m_Elements.at(j).isHydrophob()))
 				{
 					++m_Fitness;
 				}
 				else if ((actualPosition.y+1 == position.y) &&		// Oben schauen
-						 (actualPosition.x == position.x))
+						 (actualPosition.x == position.x)	&&
+						 (m_Elements.at(j).isHydrophob()))
 				{
 					++m_Fitness;
 				}
 				else if ((actualPosition.y-1 == position.y) &&		// Unten schauen
-					(actualPosition.x == position.x))
+						 (actualPosition.x == position.x)	&&
+						 (m_Elements.at(j).isHydrophob()))
 				{
 					++m_Fitness;
 				}
@@ -124,10 +128,10 @@ void Folding::calculateFitness(void)
 			}
 		}
 	}
-	m_Fitness/=2; // eins zu viel? -- Brauch ich das?
+	m_Fitness/=2;
 }
 
-void Folding::createMatrix(void) 
+void Folding::calculatePositionsAndDirections(void) 
 {
 	for (unsigned int i = 0; i < m_Elements.size()-1; ++i)
 	{
@@ -135,29 +139,6 @@ void Folding::createMatrix(void)
 		ViewingDirection viewingDirection = m_Elements.at(i).getViewingDirection();
 		Direction direction = m_Elements.at(i).getDirection();
 
-		/*if (i==0) // Brauch ich garnicht
-		{
-			if (direction == Straight)
-			{
-				m_Elements.at(i+1).setViewingDirection(East);
-				position.x += 1;
-
-			}
-			else if (direction == Right)
-			{
-				m_Elements.at(i+1).setViewingDirection(South);
-				position.y += -1;
-			}
-			else if (direction == Left)
-			{
-				m_Elements.at(i+1).setViewingDirection(North);
-				position.y += 1;
-			}
-			m_Elements.at(i+1).setPosition(position);
-			continue;
-		}*/
-
-		
 		if (viewingDirection == East && direction == Straight)
 		{
 			position.x = m_Elements.at(i).getPosition().x + 1;
