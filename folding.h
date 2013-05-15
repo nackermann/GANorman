@@ -21,7 +21,7 @@ public:
     int getOverlaps(void);
 
 	void browse(std::ostream &outputStream);
-	void calculateFitness(void);
+	void calculateFitness(void);		// energy /= anzahlüberlappungen +1 noch machen
 	void calculatePositionsAndDirections(void);
 	void calculateOverlaps(void);
 

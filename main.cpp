@@ -290,7 +290,7 @@ void init(void)
         myAlgorithm.getPopulation().killPopulation();
         myAlgorithm.run(SEQ20,1);
     } while ((myAlgorithm.getPopulation().getFolding(0).getOverlaps())!=0);
-    
+
 	myAlgorithm.browsePopulation(std::cout);
 
 	glClearDepth(1); 
