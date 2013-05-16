@@ -16,6 +16,7 @@ public:
     void killPopulation(void);
     
     Folding& getFolding(unsigned int index);
+    unsigned long getNumberOfFoldings(void);
 
 	void browse(std::ostream &outputStream);
 

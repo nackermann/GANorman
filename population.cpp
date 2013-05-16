@@ -33,3 +33,8 @@ Folding& Population::getFolding(unsigned int index)
 {
     return m_Foldings.at(index);
 }
+
+unsigned long Population::getNumberOfFoldings(void)
+{
+    return m_Foldings.size();
+}

@@ -168,82 +168,89 @@ void RenderScene()
     //glRotated(rotation, 1, 1, 1);
     
     Population myPopulation = myAlgorithm.getPopulation();
-    Folding myFolding = myPopulation.getFolding(0);
+    
+    for (unsigned int i=0,j=0; i<myPopulation.getNumberOfFoldings() ; ++i, j+=10) {
+        Folding myFolding = myPopulation.getFolding(i);
         
-    Vector2i position;
+        Vector2i position;
         
-    for (unsigned int i=0; i<myFolding.getSize(); ++i) {
-        position = myFolding.getElement(i).getPosition();
-        glPushMatrix();
-        if (myFolding.getElement(i).isHydrophob()) {
-            glColor3f(0, 0, 0);
-        }
-        else
-        {
-            glColor3f(1, 1, 1);
-        }
-        glTranslatef(position.x, position.y , 0);
-        glutSolidSphere(sphereRadius, 100, 100);
-        glPopMatrix();
-            
-        if (i==myFolding.getSize()-1) {
-            continue;
-        }
-            
-        ViewingDirection viewingDirection = myFolding.getElement(i).getViewingDirection();
-        Direction direction = myFolding.getElement(i).getDirection();
-            
-            
-        glPushMatrix();
-        glTranslatef(position.x, position.y, 0);
-        glColor3f(0, 1, 0);
-        if (((viewingDirection == East) && (direction == Left)) ||
-            ((viewingDirection == North) && (direction == Straight)) ||
-            ((viewingDirection == West) && (direction == Right)))
-        {
+        for (unsigned int i=0; i<myFolding.getSize(); ++i) {
+            position = myFolding.getElement(i).getPosition();
+            position.x += j;
+            //position.y += j;
             glPushMatrix();
-            glRotatef(90, 0, 0, 1); // Hoch
-            glTranslatef(0.5, 0, 0);
-            glScalef((1/sphereRadius)*sphereRadius, 0.1, 0.1);
-            glutSolidCube(1);
+            if (myFolding.getElement(i).isHydrophob()) {
+                glColor3f(0, 0, 0);
+            }
+            else
+            {
+                glColor3f(1, 1, 1);
+            }
+            glTranslatef(position.x, position.y , 0);
+            glutSolidSphere(sphereRadius, 30, 30);
             glPopMatrix();
-        }
-        else if (((viewingDirection == East) && (direction == Straight)) ||
-                ((viewingDirection == South) && (direction == Left)) ||
-                ((viewingDirection == North) && (direction == Right)))
-        {
-            glPushMatrix();         // Rechts
-            glTranslatef(0.5, 0, 0);
-            glScalef((1/sphereRadius)*sphereRadius, 0.1, 0.1);
-            glutSolidCube(1);
-            glPopMatrix();
-        }
-        else if (((viewingDirection == East) && (direction == Right)) ||
-                ((viewingDirection == West) && (direction == Left)) ||
-                ((viewingDirection == South) && (direction == Straight)))
-        {
-            glPushMatrix();
-            glRotatef(270, 0, 0, 1); // Runter
-            glTranslatef(0.5, 0, 0);
-            glScalef((1/sphereRadius)*sphereRadius, 0.1, 0.1);
-            glutSolidCube(1);
-            glPopMatrix();
-        }
-        else if (((viewingDirection == West) && (direction == Straight)) ||
-                ((viewingDirection == North) && (direction == Left)) ||
-                ((viewingDirection == South) && (direction == Right))) // Links
-        {
-            glPushMatrix();
-            glRotatef(180, 0, 0, 1); // links
-            glTranslatef(0.5, 0, 0);
-            glScalef((1/sphereRadius)*sphereRadius, 0.1, 0.1);
-            glutSolidCube(1);
-            glPopMatrix();
-        }
             
-        glPopMatrix();
+            if (i==myFolding.getSize()-1) {
+                continue;
+            }
+            
+            ViewingDirection viewingDirection = myFolding.getElement(i).getViewingDirection();
+            Direction direction = myFolding.getElement(i).getDirection();
+            
+            
+            glPushMatrix();
+            glTranslatef(position.x, position.y, 0);
+            glColor3f(0, 1, 0);
+            if (((viewingDirection == East) && (direction == Left)) ||
+                ((viewingDirection == North) && (direction == Straight)) ||
+                ((viewingDirection == West) && (direction == Right)))
+            {
+                glPushMatrix();
+                glRotatef(90, 0, 0, 1); // Hoch
+                glTranslatef(0.5, 0, 0);
+                glScalef((1/sphereRadius)*sphereRadius, 0.1, 0.1);
+                glutSolidCube(1);
+                glPopMatrix();
+            }
+            else if (((viewingDirection == East) && (direction == Straight)) ||
+                     ((viewingDirection == South) && (direction == Left)) ||
+                     ((viewingDirection == North) && (direction == Right)))
+            {
+                glPushMatrix();         // Rechts
+                glTranslatef(0.5, 0, 0);
+                glScalef((1/sphereRadius)*sphereRadius, 0.1, 0.1);
+                glutSolidCube(1);
+                glPopMatrix();
+            }
+            else if (((viewingDirection == East) && (direction == Right)) ||
+                     ((viewingDirection == West) && (direction == Left)) ||
+                     ((viewingDirection == South) && (direction == Straight)))
+            {
+                glPushMatrix();
+                glRotatef(270, 0, 0, 1); // Runter
+                glTranslatef(0.5, 0, 0);
+                glScalef((1/sphereRadius)*sphereRadius, 0.1, 0.1);
+                glutSolidCube(1);
+                glPopMatrix();
+            }
+            else if (((viewingDirection == West) && (direction == Straight)) ||
+                     ((viewingDirection == North) && (direction == Left)) ||
+                     ((viewingDirection == South) && (direction == Right))) // Links
+            {
+                glPushMatrix();
+                glRotatef(180, 0, 0, 1); // links
+                glTranslatef(0.5, 0, 0);
+                glScalef((1/sphereRadius)*sphereRadius, 0.1, 0.1);
+                glutSolidCube(1);
+                glPopMatrix();
+            }
+            
+            glPopMatrix();
+            
+        }
         
     }
+    
     
     glutSwapBuffers();
 	glFlush();
@@ -286,10 +293,12 @@ void init(void)
     glClearColor(0,0,1, 1.0 );
 	glEnable(GL_DEPTH_TEST);
     
-    do {
+    /*do {
         myAlgorithm.getPopulation().killPopulation();
         myAlgorithm.run(SEQ20,1);
-    } while ((myAlgorithm.getPopulation().getFolding(0).getOverlaps())!=0);
+    } while ((myAlgorithm.getPopulation().getFolding(0).getOverlaps())!=0);*/
+    
+    myAlgorithm.run(SEQ20, 50);
 
 	myAlgorithm.browsePopulation(std::cout);
 
