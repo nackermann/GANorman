@@ -27,8 +27,8 @@ public:
 
 private:
 	std::vector<Element> m_Elements;
-	int m_Fitness;
-	int m_Overlaps;
+	unsigned int m_Fitness; // Fitness soll nie negativ werden
+	unsigned int m_Overlaps;
 };
 
 #endif

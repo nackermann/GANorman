@@ -72,7 +72,7 @@ void Folding::browse(std::ostream &outputStream)
 		}
 
 		outputStream << m_Elements.at(i).getPosition().x << "/" << m_Elements.at(i).getPosition().y;
-		outputStream << " Index: " << m_Elements.at(i).getIndex();
+		outputStream << " Index: " << i;
 		outputStream << std::endl;
 	}
 	outputStream << "Overlaps: " << m_Overlaps << std::endl;
@@ -159,8 +159,6 @@ void Folding::calculatePositionsAndDirections(void)
 			position.y = m_Elements.at(i).getPosition().y - 1;
 			m_Elements.at(i+1).setViewingDirection(South);
 		}
-
-		m_Elements.at(i+1).setIndex(i+1);
 		m_Elements.at(i+1).setPosition(position);
 	}
 }
@@ -172,7 +170,7 @@ void Folding::calculateFitnessAndOverlaps(void)
 		Vector2i actualPosition = m_Elements.at(i).getPosition();
 		for (unsigned int j=0;j<m_Elements.size();++j)
 		{
-			if (i==j)
+			if (i==j)	// Keine Elemente mit sich selber pruefen !
 			{
 				continue;
 			}
@@ -184,43 +182,46 @@ void Folding::calculateFitnessAndOverlaps(void)
 				++m_Overlaps;
 			}
 
-			if (m_Elements.at(i).isHydrophob())		// Wenn hydrophob dann direkt Fitness berechnen
+			if (m_Elements.at(i).isHydrophob())		// Wenn hydrophob dann direkt Fitness berechnen ( für jeden j durchgang geht er dann hier rein )
 			{
-				if ((m_Elements.at(i).getIndex() == m_Elements.at(j).getIndex()+1) ||		// Auf Sequenznachbarn prüfen
-					(m_Elements.at(i).getIndex() == m_Elements.at(j).getIndex()-1))
+
+				if  ((i == j+1) ||	// Wenn j sowieso Sequenznachbar ist brauchen wir ihn auch überhaupt nicht prüfen, somit sind Sequenznachbaren auch ausgeschlossen
+					 (i == j-1))
 				{
 					continue;
 				}
-
-				if ((actualPosition.x-1 == position.x)	&&			// Links schauen
-					(actualPosition.y == position.y)	&&
-					(m_Elements.at(j).isHydrophob()))
+				else
 				{
-					++m_Fitness;
-				}
-				else if ((actualPosition.x+1 == position.x) &&		// Rechts schauen
-					(actualPosition.y == position.y)	&&
-					(m_Elements.at(j).isHydrophob()))
-				{
-					++m_Fitness;
-				}
-				else if ((actualPosition.y+1 == position.y) &&		// Oben schauen
-					(actualPosition.x == position.x)	&&
-					(m_Elements.at(j).isHydrophob()))
-				{
-					++m_Fitness;
-				}
-				else if ((actualPosition.y-1 == position.y) &&		// Unten schauen
-					(actualPosition.x == position.x)	&&
-					(m_Elements.at(j).isHydrophob()))
-				{
-					++m_Fitness;
+					if ((actualPosition.x-1 == position.x)	&&			// Links schauen, Theoretisch müsste man je nach Viewing Direktion nur Oben/unten oder Links/Rechts schauen
+						(actualPosition.y == position.y)	&&			// Ich verändere auf meinem Hydrophoben Element die Position immer um 1 und schau dann ob ich auf einem anderen Hydrophoben Element liege
+						(m_Elements.at(j).isHydrophob()))
+					{
+						++m_Fitness;
+					}
+					else if ((actualPosition.x+1 == position.x) &&		// Rechts schauen
+							 (actualPosition.y == position.y)	&&
+							 (m_Elements.at(j).isHydrophob()))
+					{
+						++m_Fitness;
+					}
+					else if ((actualPosition.y+1 == position.y) &&		// Oben schauen
+							 (actualPosition.x == position.x)	&&
+							 (m_Elements.at(j).isHydrophob()))
+					{
+						++m_Fitness;
+					}
+					else if ((actualPosition.y-1 == position.y) &&		// Unten schauen
+							 (actualPosition.x == position.x)	&&
+							 (m_Elements.at(j).isHydrophob()))
+					{
+						++m_Fitness;
+					}
 				}
 			}
 		}
 	}
 	m_Fitness/=2;
-	m_Overlaps/=2;
+	m_Overlaps/=2;89
 }
 
 void Folding::draw(int offsetX, int offsetY) 

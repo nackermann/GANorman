@@ -86,15 +86,11 @@ public:
 	void setViewingDirection(ViewingDirection viewingDirection);
 	ViewingDirection& getViewingDirection(void);
 
-	void setIndex(int indexValue);
-	int getIndex(void);
-
 private:
 	Direction m_Direction;
 	bool m_isHydrophob;		// hydrophob = "black"
 	Vector2i m_Position;
 	ViewingDirection m_ViewingDirection;
-	int m_Index;
 
 };
 
