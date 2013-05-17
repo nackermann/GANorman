@@ -18,9 +18,7 @@ Folding::Folding(std::string &sequence)
 	}
 
 	calculatePositionsAndDirections();
-	calculateOverlaps();
-	calculateFitness();
-	
+	calculateFitnessAndOverlaps();
 }
 
 Folding::~Folding()
@@ -79,56 +77,6 @@ void Folding::browse(std::ostream &outputStream)
 	}
 	outputStream << "Overlaps: " << m_Overlaps << std::endl;
 	outputStream << "Fitness: " << m_Fitness << std::endl;
-}
-
-void Folding::calculateFitness(void) 
-{
-	for (unsigned int i=0; i<m_Elements.size();++i)
-	{
-		Vector2i actualPosition = m_Elements.at(i).getPosition();
-		if (m_Elements.at(i).isHydrophob())
-		{
-			for (unsigned int j = 0; j < m_Elements.size(); ++j)
-			{
-				if (i==j)
-				{
-					continue;
-				}
-				else if ((m_Elements.at(i).getIndex() == m_Elements.at(j).getIndex()+1) ||		// Auf Sequenznachbarn prüfen
-						 (m_Elements.at(i).getIndex() == m_Elements.at(j).getIndex()-1))
-				{
-					continue;
-				}
-				Vector2i position = m_Elements.at(j).getPosition();
-				if ((actualPosition.x-1 == position.x)	&&			// Links schauen
-					(actualPosition.y == position.y)	&&
-					(m_Elements.at(j).isHydrophob()))
-				{
-					++m_Fitness;
-				}
-				else if ((actualPosition.x+1 == position.x) &&		// Rechts schauen
-						 (actualPosition.y == position.y)	&&
-						 (m_Elements.at(j).isHydrophob()))
-				{
-					++m_Fitness;
-				}
-				else if ((actualPosition.y+1 == position.y) &&		// Oben schauen
-						 (actualPosition.x == position.x)	&&
-						 (m_Elements.at(j).isHydrophob()))
-				{
-					++m_Fitness;
-				}
-				else if ((actualPosition.y-1 == position.y) &&		// Unten schauen
-						 (actualPosition.x == position.x)	&&
-						 (m_Elements.at(j).isHydrophob()))
-				{
-					++m_Fitness;
-				}
-
-			}
-		}
-	}
-	m_Fitness/=2;
 }
 
 void Folding::calculatePositionsAndDirections(void) 
@@ -217,7 +165,7 @@ void Folding::calculatePositionsAndDirections(void)
 	}
 }
 
-void Folding::calculateOverlaps(void) 
+void Folding::calculateFitnessAndOverlaps(void) 
 {
 	for (unsigned int i=0;i<m_Elements.size();++i)
 	{
@@ -230,13 +178,48 @@ void Folding::calculateOverlaps(void)
 			}
 			Vector2i position = m_Elements.at(j).getPosition();
 
-			if ((actualPosition.x == position.x) &&
+			if ((actualPosition.x == position.x) &&		// Ueberlappungen berechnen
 				(actualPosition.y == position.y))
 			{
 				++m_Overlaps;
 			}
+
+			if (m_Elements.at(i).isHydrophob())		// Wenn hydrophob dann direkt Fitness berechnen
+			{
+				if ((m_Elements.at(i).getIndex() == m_Elements.at(j).getIndex()+1) ||		// Auf Sequenznachbarn prüfen
+					(m_Elements.at(i).getIndex() == m_Elements.at(j).getIndex()-1))
+				{
+					continue;
+				}
+
+				if ((actualPosition.x-1 == position.x)	&&			// Links schauen
+					(actualPosition.y == position.y)	&&
+					(m_Elements.at(j).isHydrophob()))
+				{
+					++m_Fitness;
+				}
+				else if ((actualPosition.x+1 == position.x) &&		// Rechts schauen
+					(actualPosition.y == position.y)	&&
+					(m_Elements.at(j).isHydrophob()))
+				{
+					++m_Fitness;
+				}
+				else if ((actualPosition.y+1 == position.y) &&		// Oben schauen
+					(actualPosition.x == position.x)	&&
+					(m_Elements.at(j).isHydrophob()))
+				{
+					++m_Fitness;
+				}
+				else if ((actualPosition.y-1 == position.y) &&		// Unten schauen
+					(actualPosition.x == position.x)	&&
+					(m_Elements.at(j).isHydrophob()))
+				{
+					++m_Fitness;
+				}
+			}
 		}
 	}
+	m_Fitness/=2;
 	m_Overlaps/=2;
 }
 

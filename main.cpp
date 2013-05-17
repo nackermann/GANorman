@@ -157,7 +157,11 @@ void init(void)
     glClearColor(0,0,1, 1.0 );
 	glEnable(GL_DEPTH_TEST);
     
-    myAlgorithm.run(SEQ20, 10);
+	do 
+	{
+		myAlgorithm.getPopulation().killPopulation();
+		myAlgorithm.run(SEQ50, 1);
+	} while (myAlgorithm.getPopulation().getFolding(0).getOverlaps()!=0);
 
 	myAlgorithm.browsePopulation(std::cout);
 
