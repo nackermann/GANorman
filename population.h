@@ -14,6 +14,7 @@ public:
 
 	void createRandomFolding(std::string& sequence);
     void killPopulation(void);
+	void draw(int chainDistance,int maxRows);
     
     Folding& getFolding(unsigned int index);
     unsigned long getNumberOfFoldings(void);

@@ -1,6 +1,15 @@
 #ifndef ELEMENT_H
 #define ELEMENT_H
 
+#ifdef __APPLE__
+#include <OpenGL/gl.h>
+#include <OpenGl/glu.h>
+#include <GLUT/glut.h>
+#else
+#include <GL/freeglut.h>
+#endif
+
+#pragma region structs
 enum Direction
 {
 	Left,
@@ -19,6 +28,36 @@ struct Vector2i
 	}
 };
 
+struct Vector2f
+{
+	float x;
+	float y;
+
+	Vector2f(float a = 0, float b = 0) : x(a), y(b)
+	{
+
+	}
+};
+
+struct Vector3f
+{
+
+	float x;
+	float y;
+	float z;
+
+	Vector3f(float a = 0, float b = 0, float c = 0) : x(a), y(b), z(c) 
+	{
+
+	}
+
+	bool operator==(Vector3f &rhs) const
+	{
+		return (x == rhs.x && y == rhs.y && z == rhs.z);
+	}
+};
+
+
 enum ViewingDirection
 {
 	North,
@@ -26,6 +65,8 @@ enum ViewingDirection
 	South,
 	West
 };
+#pragma endregion
+
 
 class Element
 {

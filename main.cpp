@@ -3,35 +3,8 @@
 
 #include "algorithm.h"
 
-#ifdef __APPLE__
-#include <OpenGL/gl.h>
-#include <OpenGl/glu.h>
-#include <GLUT/glut.h>
-#else
-#include <GL/freeglut.h>
-#endif
-
-
 //#include "folding.h"
 //#include "population.h"
-
-struct Vector3f
-{
-    
-	float x;
-	float y;
-	float z;
-    
-	Vector3f(float a = 0, float b = 0, float c = 0) : x(a), y(b), z(c) 
-	{
-        
-	}
-    
-	bool operator==(Vector3f &rhs) const
-	{
-		return (x == rhs.x && y == rhs.y && z == rhs.z);
-	}
-};
 
 // benchmark sequences for the 2d HP model
 // 0 = hydrophil, "white"
@@ -50,9 +23,6 @@ std::string SEQ50 = "11010101011110100010001000010001000101111010101011";
 Vector3f eyePos(0,0,5);
 Vector3f centerPos(0,0,0);
 bool fullscreen = false;
-GLfloat sphereRadius = 0.25;
-bool toggle = false;
-float rotation = 0;
 
 Algorithm myAlgorithm;
 
@@ -65,7 +35,7 @@ void init(void);
 
 void keyPressed(unsigned char key, int mousePosX, int mousePosY)
 {
-    
+	#pragma region handleKeyboardInput
     if (key == 'r')
     {
         if (fullscreen)
@@ -120,35 +90,11 @@ void keyPressed(unsigned char key, int mousePosX, int mousePosY)
 	{
 		eyePos.y += -0.5;
 	}
+	#pragma endregion
 }
 
 void Animate (int value)    
 {
-	// magic
-
-    
-    /*if (eyePos.x >= 20 && eyePos.y >= 20) {
-        toggle = true;
-    }
-    else if (eyePos.x <= 0 && eyePos.y <= 0)
-    {
-        toggle = false;
-    }
-    
-    if (!toggle) {
-        ++eyePos.x;
-        ++eyePos.y;
-    }
-    else
-    {
-        --eyePos.x;
-        --eyePos.y;
-    }*/
-    
-    ++rotation;
-    if (rotation>=360) {
-        rotation = 0;
-    }
     
 	glutPostRedisplay();
     
@@ -164,93 +110,11 @@ void RenderScene()
 	gluLookAt ( eyePos.x,  eyePos.y,  eyePos.z,
                centerPos.x,  centerPos.y,  centerPos.z, 
                0., 1., 0.);
-    
-    //glRotated(rotation, 1, 1, 1);
-    
-    Population myPopulation = myAlgorithm.getPopulation();
-    
-    for (unsigned int i=0,j=0; i<myPopulation.getNumberOfFoldings() ; ++i, j+=10) {
-        Folding myFolding = myPopulation.getFolding(i);
-        
-        Vector2i position;
-        
-        for (unsigned int i=0; i<myFolding.getSize(); ++i) {
-            position = myFolding.getElement(i).getPosition();
-            position.x += j;
-            //position.y += j;
-            glPushMatrix();
-            if (myFolding.getElement(i).isHydrophob()) {
-                glColor3f(0, 0, 0);
-            }
-            else
-            {
-                glColor3f(1, 1, 1);
-            }
-            glTranslatef(position.x, position.y , 0);
-            glutSolidSphere(sphereRadius, 30, 30);
-            glPopMatrix();
-            
-            if (i==myFolding.getSize()-1) {
-                continue;
-            }
-            
-            ViewingDirection viewingDirection = myFolding.getElement(i).getViewingDirection();
-            Direction direction = myFolding.getElement(i).getDirection();
-            
-            
-            glPushMatrix();
-            glTranslatef(position.x, position.y, 0);
-            glColor3f(0, 1, 0);
-            if (((viewingDirection == East) && (direction == Left)) ||
-                ((viewingDirection == North) && (direction == Straight)) ||
-                ((viewingDirection == West) && (direction == Right)))
-            {
-                glPushMatrix();
-                glRotatef(90, 0, 0, 1); // Hoch
-                glTranslatef(0.5, 0, 0);
-                glScalef((1/sphereRadius)*sphereRadius, 0.1, 0.1);
-                glutSolidCube(1);
-                glPopMatrix();
-            }
-            else if (((viewingDirection == East) && (direction == Straight)) ||
-                     ((viewingDirection == South) && (direction == Left)) ||
-                     ((viewingDirection == North) && (direction == Right)))
-            {
-                glPushMatrix();         // Rechts
-                glTranslatef(0.5, 0, 0);
-                glScalef((1/sphereRadius)*sphereRadius, 0.1, 0.1);
-                glutSolidCube(1);
-                glPopMatrix();
-            }
-            else if (((viewingDirection == East) && (direction == Right)) ||
-                     ((viewingDirection == West) && (direction == Left)) ||
-                     ((viewingDirection == South) && (direction == Straight)))
-            {
-                glPushMatrix();
-                glRotatef(270, 0, 0, 1); // Runter
-                glTranslatef(0.5, 0, 0);
-                glScalef((1/sphereRadius)*sphereRadius, 0.1, 0.1);
-                glutSolidCube(1);
-                glPopMatrix();
-            }
-            else if (((viewingDirection == West) && (direction == Straight)) ||
-                     ((viewingDirection == North) && (direction == Left)) ||
-                     ((viewingDirection == South) && (direction == Right))) // Links
-            {
-                glPushMatrix();
-                glRotatef(180, 0, 0, 1); // links
-                glTranslatef(0.5, 0, 0);
-                glScalef((1/sphereRadius)*sphereRadius, 0.1, 0.1);
-                glutSolidCube(1);
-                glPopMatrix();
-            }
-            
-            glPopMatrix();
-            
-        }
-        
-    }
-    
+
+	Population& myPopulation = myAlgorithm.getPopulation();
+
+	myPopulation.draw(18,5);
+
     
     glutSwapBuffers();
 	glFlush();
@@ -293,12 +157,7 @@ void init(void)
     glClearColor(0,0,1, 1.0 );
 	glEnable(GL_DEPTH_TEST);
     
-    /*do {
-        myAlgorithm.getPopulation().killPopulation();
-        myAlgorithm.run(SEQ20,1);
-    } while ((myAlgorithm.getPopulation().getFolding(0).getOverlaps())!=0);*/
-    
-    myAlgorithm.run(SEQ20, 50);
+    myAlgorithm.run(SEQ20, 10);
 
 	myAlgorithm.browsePopulation(std::cout);
 

@@ -24,6 +24,7 @@ public:
 	void calculateFitness(void);		// energy /= anzahlüberlappungen +1 noch machen
 	void calculatePositionsAndDirections(void);
 	void calculateOverlaps(void);
+	void draw(int offsetX, int offsetY);
 
 private:
 	std::vector<Element> m_Elements;

@@ -144,7 +144,6 @@ void Folding::calculatePositionsAndDirections(void)
 			position.x = m_Elements.at(i).getPosition().x + 1;
 			position.y = m_Elements.at(i).getPosition().y ;
 			m_Elements.at(i+1).setViewingDirection(East);
-
 		}
 		else if (viewingDirection == East && direction == Right)
 		{
@@ -239,4 +238,91 @@ void Folding::calculateOverlaps(void)
 		}
 	}
 	m_Overlaps/=2;
+}
+
+void Folding::draw(int offsetX, int offsetY) 
+{
+	Vector2i position;
+	float sphereRadius = 0.25f;
+
+
+	for (unsigned int i=0; i<m_Elements.size(); ++i) {
+
+		// Kugeln ( Hydrophobe, Hyrophile ) zeichnen
+
+		position = m_Elements.at(i).getPosition();
+		position.x += offsetX;
+		position.y += offsetY;
+		glPushMatrix();
+		if (m_Elements.at(i).isHydrophob()) {
+			glColor3f(0, 0, 0);
+		}
+		else
+		{
+			glColor3f(1, 1, 1);
+		}
+		glTranslatef((GLfloat)position.x, (GLfloat)position.y , 0);
+		glutSolidSphere(sphereRadius, 30, 30);
+		glPopMatrix();
+
+		if (i==m_Elements.size()-1) { // Für das letzte Element muss ich keine Verbindung zeichnen
+			continue;
+		}
+
+		// Verbindungen zeichnen
+
+		ViewingDirection viewingDirection = m_Elements.at(i).getViewingDirection();
+		Direction direction = m_Elements.at(i).getDirection();
+
+
+		glPushMatrix();
+		glTranslatef((GLfloat)position.x, (GLfloat)position.y, 0);
+		glColor3f(0, 1, 0);
+		if (((viewingDirection == East) && (direction == Left)) ||
+			((viewingDirection == North) && (direction == Straight)) ||
+			((viewingDirection == West) && (direction == Right)))
+		{
+			glPushMatrix();
+			glRotatef(90, 0, 0, 1); // Hoch
+			glTranslatef(0.5, 0, 0);
+			glScalef((GLfloat)((1/sphereRadius)*sphereRadius), 0.1f, 0.1f);
+			glutSolidCube(1);
+			glPopMatrix();
+		}
+		else if (((viewingDirection == East) && (direction == Straight)) ||
+			((viewingDirection == South) && (direction == Left)) ||
+			((viewingDirection == North) && (direction == Right)))
+		{
+			glPushMatrix();         // Rechts
+			glTranslatef(0.5, 0, 0);
+			glScalef((GLfloat)((1/sphereRadius)*sphereRadius), 0.1f, 0.1f);
+			glutSolidCube(1);
+			glPopMatrix();
+		}
+		else if (((viewingDirection == East) && (direction == Right)) ||
+			((viewingDirection == West) && (direction == Left)) ||
+			((viewingDirection == South) && (direction == Straight)))
+		{
+			glPushMatrix();
+			glRotatef(270, 0, 0, 1); // Runter
+			glTranslatef(0.5, 0, 0);
+			glScalef((GLfloat)((1/sphereRadius)*sphereRadius), 0.1f, 0.1f);
+			glutSolidCube(1);
+			glPopMatrix();
+		}
+		else if (((viewingDirection == West) && (direction == Straight)) ||
+			((viewingDirection == North) && (direction == Left)) ||
+			((viewingDirection == South) && (direction == Right))) // Links
+		{
+			glPushMatrix();
+			glRotatef(180, 0, 0, 1); // links
+			glTranslatef(0.5, 0, 0);
+			glScalef((GLfloat)((1/sphereRadius)*sphereRadius), 0.1f, 0.1f);
+			glutSolidCube(1);
+			glPopMatrix();
+		}
+
+		glPopMatrix();
+
+	}
 }
