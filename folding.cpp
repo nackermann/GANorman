@@ -221,7 +221,9 @@ void Folding::calculateFitnessAndOverlaps(void)
 		}
 	}
 	m_Fitness/=2;
-	m_Overlaps/=2;89
+	m_Overlaps/=2;
+
+	m_Fitness/=m_Overlaps+1; // Fitness schlechter bewerten wenn Ueberlappungen vorhanden sind
 }
 
 void Folding::draw(int offsetX, int offsetY) 
@@ -296,7 +298,7 @@ void Folding::draw(int offsetX, int offsetY)
 		}
 		else if (((viewingDirection == West) && (direction == Straight)) ||
 			((viewingDirection == North) && (direction == Left)) ||
-			((viewingDirection == South) && (direction == Right))) // Links
+			((viewingDirection == South) && (direction == Right)))
 		{
 			glPushMatrix();
 			glRotatef(180, 0, 0, 1); // links
