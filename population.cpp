@@ -90,13 +90,18 @@ float Population::getEvaluation(void)
 
 void Population::selection(void) 
 {
+	if (m_AggregatedFoldingFitness==0)
+	{
+		return;
+	}
+
 	std::vector<Folding> selectedFoldings;
 
 	for (unsigned int i = 0;i < m_Foldings.size();++i)
 	{
 		int r = rand() % m_AggregatedFoldingFitness;
 		int sumFitness = 0;
-	
+
 		for (unsigned int j = 0; j < m_Foldings.size(); ++j)
 		{
 			sumFitness += m_Foldings.at(j).getFitness();
