@@ -52,23 +52,23 @@ void keyPressed(unsigned char key, int mousePosX, int mousePosY)
     }
     else if (key == 'w')
 	{
-        eyePos.y += 0.5;
-        centerPos.y += 0.5;
+        eyePos.y += 1.5;
+        centerPos.y += 1.5;
 	}
     else if (key == 's')
 	{
-        eyePos.y += -0.5;
-        centerPos.y += -0.5;
+        eyePos.y += -1.5;
+        centerPos.y += -1.5;
 	}
     else if (key == 'a')
 	{
-        eyePos.x += -0.5;
-        centerPos.x += -0.5;
+        eyePos.x += -1.5;
+        centerPos.x += -1.5;
 	}
     else if (key == 'd')
 	{
-        eyePos.x += 0.5;
-        centerPos.x += 0.5;
+        eyePos.x += 1.5;
+        centerPos.x += 1.5;
 	}
 	else if (key==27) // ESC
 	{
@@ -76,19 +76,19 @@ void keyPressed(unsigned char key, int mousePosX, int mousePosY)
 	}
     else if (key == 'k')
     {
-        eyePos.z += 0.5;
+        eyePos.z += 1.5;
     }
     else if (key == 'l')
     {
-        eyePos.z += -0.5;
+        eyePos.z += -1.5;
     }
 	else if (key == 'o')
 	{
-		eyePos.y += +0.5;
+		eyePos.y += +1.5;
 	}
 	else if (key == 'p')
 	{
-		eyePos.y += -0.5;
+		eyePos.y += -1.5;
 	}
 	#pragma endregion
 }
@@ -111,9 +111,9 @@ void RenderScene()
                centerPos.x,  centerPos.y,  centerPos.z, 
                0., 1., 0.);
 
-	//Population& myPopulation = myAlgorithm.getPopulation();
+	Population& myPopulation = myAlgorithm.getPopulation();
 
-	//myPopulation.draw(18,5);
+	myPopulation.draw(18,5);
 
     
     glutSwapBuffers();
@@ -168,7 +168,7 @@ void init(void)
 		(myAlgorithm.getPopulation().getFolding(4).getOverlaps()!=0) ||
 		(myAlgorithm.getPopulation().getFolding(5).getOverlaps()!=0));*/
 
-	myAlgorithm.run(SEQ20, 5000, 100, 0.08f, 0.52f);
+	myAlgorithm.run(SEQ20, 450, 5000, 0.08f, 0.52f);
 
 	//myAlgorithm.browsePopulation(std::cout);
 

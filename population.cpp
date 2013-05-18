@@ -52,8 +52,15 @@ void Population::draw(int chainDistance, int maxRows)
 	}
 }
 
-void Population::evaluate(void)		// wird noch nirgends aufgerufen
+void Population::evaluate(void)
 {
+	
+	for (unsigned int i = 0; i < m_Foldings.size(); ++i)
+	{
+		m_Foldings.at(i).calculatePositionsAndDirections();
+		m_Foldings.at(i).calculateFitnessAndOverlaps();
+	}
+
 	unsigned int aggregatedFoldingFitness = 0;
 
 	for (unsigned int i=0;i<m_Foldings.size();++i)
@@ -104,12 +111,41 @@ void Population::selection(void)
 	m_Foldings = selectedFoldings;
 }
 
-void Population::crossover(float crossoverRate) 
+void Population::crossover(float crossoverRate)
 {
+
+	for (unsigned int i=0; i < (unsigned int)(m_Foldings.size()*crossoverRate); ++i)
+	{
+		Folding &crossoverCandidate1 = m_Foldings.at(rand() % m_Foldings.size());
+		Folding &crossoverCandidate2 = m_Foldings.at(rand() % m_Foldings.size());
+	
+		for (unsigned int i = rand() % crossoverCandidate1.getSize(); i < crossoverCandidate1.getSize(); ++i)
+		{
+			std::swap(crossoverCandidate1.getElement(i), crossoverCandidate2.getElement(i));	// std::swap langsam, ersetzen?
+		}
+	}
 
 }
 
 void Population::mutation(float mutationRate) 
 {
+	for (unsigned int i=0; i < (unsigned int)(m_Foldings.size()*mutationRate); ++i)
+	{
+		Folding &mutationCandidate = m_Foldings.at(rand() % m_Foldings.size());
 
+		unsigned int elementToMutate = rand() % mutationCandidate.getSize();
+
+		Direction &directionToMutate = mutationCandidate.getElement(elementToMutate).getDirection();
+
+		Direction rDirection = static_cast<Direction>(rand()%3);
+
+		while (rDirection == directionToMutate)
+		{
+			rDirection = static_cast<Direction>(rand()%3);
+		}
+
+		mutationCandidate.getElement(elementToMutate).setDirection(rDirection);
+
+	}
+	
 }
