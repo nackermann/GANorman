@@ -168,9 +168,9 @@ void init(void)
 		(myAlgorithm.getPopulation().getFolding(4).getOverlaps()!=0) ||
 		(myAlgorithm.getPopulation().getFolding(5).getOverlaps()!=0));*/
 
-	myAlgorithm.run(SEQ20, 5000, 250, 0.08f, 0.52f);
+	myAlgorithm.run(SEQ20, 50, 500, 0.08f, 0.52f);
 
-	//myAlgorithm.browsePopulation(std::cout);
+	myAlgorithm.browsePopulation(std::cout);
 
 	glClearDepth(1); 
 }

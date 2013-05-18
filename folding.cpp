@@ -167,14 +167,14 @@ void Folding::calculateFitnessAndOverlaps(void)
 {
 	for (unsigned int i=0;i<m_Elements.size();++i)
 	{
-		Vector2i actualPosition = m_Elements.at(i).getPosition();
+		Vector2i &actualPosition = m_Elements.at(i).getPosition();
 		for (unsigned int j=0;j<m_Elements.size();++j)
 		{
 			if (i==j)	// Keine Elemente mit sich selber pruefen !
 			{
 				continue;
 			}
-			Vector2i position = m_Elements.at(j).getPosition();
+			Vector2i &position = m_Elements.at(j).getPosition();
 
 			if ((actualPosition.x == position.x) &&		// Ueberlappungen berechnen
 				(actualPosition.y == position.y))
@@ -183,10 +183,10 @@ void Folding::calculateFitnessAndOverlaps(void)
 			}
 
 			if (m_Elements.at(i).isHydrophob())		// Wenn hydrophob dann direkt Fitness berechnen ( für jeden j durchgang geht er dann hier rein )
-			{
+			{  /// hier direkt auch j hydrophob noch
 
-				if  ((i == j+1) ||	// Wenn j sowieso Sequenznachbar ist brauchen wir ihn auch überhaupt nicht prüfen, somit sind Sequenznachbaren auch ausgeschlossen
-					 (i == j-1))
+				if  ((i == j-1) ||	// Wenn j sowieso Sequenznachbar ist brauchen wir ihn auch überhaupt nicht prüfen, somit sind Sequenznachbaren auch ausgeschlossen
+					 (i == j+1))
 				{
 					continue;
 				}

@@ -54,7 +54,7 @@ void Population::draw(int chainDistance, int maxRows)
 
 void Population::evaluate(void)
 {
-	
+
 	for (unsigned int i = 0; i < m_Foldings.size(); ++i)
 	{
 		m_Foldings.at(i).calculatePositionsAndDirections();
