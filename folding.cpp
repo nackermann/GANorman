@@ -165,6 +165,9 @@ void Folding::calculatePositionsAndDirections(void)
 
 void Folding::calculateFitnessAndOverlaps(void) 
 {
+	m_Fitness = 0;
+	m_Overlaps = 0;
+
 	for (unsigned int i=0;i<m_Elements.size();++i)
 	{
 		Vector2i &actualPosition = m_Elements.at(i).getPosition();
