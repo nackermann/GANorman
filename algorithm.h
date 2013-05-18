@@ -11,11 +11,13 @@ public:
 	Algorithm();
 	~Algorithm();
 
-	void run(std::string& sequence, unsigned int populationSize);
+	void run(std::string& sequence, unsigned int populationSize, unsigned int maxGeneration, float mutationRate, float crossoverRate);
     
     Population& getPopulation(void);
 
 	void browsePopulation(std::ostream &outputStream);
+
+	void browseEvaluation(std::ostream &outputStream);
 
 private:
 	Population m_Population;
