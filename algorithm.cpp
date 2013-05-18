@@ -11,7 +11,7 @@ Algorithm::~Algorithm()
 {
 }
 
-void Algorithm::run(std::string& sequence, unsigned int populationSize, unsigned int maxGeneration, float mutationRate, float crossoverRate) 
+void Algorithm::run(std::string &sequence, unsigned int populationSize, unsigned int maxGeneration, float mutationRate, float crossoverRate) 
 {
 	for (unsigned int i = 0; i < populationSize; ++i)	// Faltungen erzeugen, je nachdem wie groß die Population werden soll
 	{
@@ -46,5 +46,5 @@ void Algorithm::browsePopulation(std::ostream &outputStream)
 
 void Algorithm::browseEvaluation(std::ostream &outputStream) 
 {
-	outputStream << m_Population.getEvaluation() << std::endl;
+	outputStream << m_Population.getEvaluation() << "\t" << m_Population.getBestFitness() << std::endl;
 }

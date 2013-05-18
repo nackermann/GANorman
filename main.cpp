@@ -113,9 +113,13 @@ void RenderScene()
 
 	Population& myPopulation = myAlgorithm.getPopulation();
 
-	myPopulation.draw(18,5);
+	glCullFace(GL_BACK);
+	glEnable(GL_CULL_FACE);
 
-    
+	myPopulation.draw(30,5);
+
+	glDisable(GL_CULL_FACE);
+
     glutSwapBuffers();
 	glFlush();
 }
@@ -156,19 +160,8 @@ void init(void)
 {
     glClearColor(0,0,1, 1.0 );
 	glEnable(GL_DEPTH_TEST);
-    
-	/*do
-	{
-		myAlgorithm.getPopulation().killPopulation();
-		myAlgorithm.run(SEQ20, 6);
-	} while ((myAlgorithm.getPopulation().getFolding(0).getOverlaps()!=0) ||
-		(myAlgorithm.getPopulation().getFolding(1).getOverlaps()!=0) ||
-		(myAlgorithm.getPopulation().getFolding(2).getOverlaps()!=0) ||
-		(myAlgorithm.getPopulation().getFolding(3).getOverlaps()!=0) ||
-		(myAlgorithm.getPopulation().getFolding(4).getOverlaps()!=0) ||
-		(myAlgorithm.getPopulation().getFolding(5).getOverlaps()!=0));*/
 
-	myAlgorithm.run(SEQ20, 5000, 500, 0.08f, 0.52f);
+	myAlgorithm.run(SEQ50, 300, 250, 0.08f, 0.52f);
 
 	//myAlgorithm.browsePopulation(std::cout);
 

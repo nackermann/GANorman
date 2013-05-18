@@ -2,7 +2,8 @@
 
 Population::Population()
 	: m_Evaluation(0.f),
-	m_AggregatedFoldingFitness(0)
+	m_AggregatedFoldingFitness(0),
+	m_BestFitness(0)
 {
 }
 
@@ -54,11 +55,19 @@ void Population::draw(int chainDistance, int maxRows)
 
 void Population::evaluate(void)
 {
+	m_BestFitness = 0;
+
 
 	for (unsigned int i = 0; i < m_Foldings.size(); ++i)
 	{
 		m_Foldings.at(i).calculatePositionsAndDirections();
 		m_Foldings.at(i).calculateFitnessAndOverlaps();
+
+		if (m_BestFitness<=m_Foldings.at(i).getFitness())
+		{
+			m_BestFitness = m_Foldings.at(i).getFitness();
+		}
+
 	}
 
 	unsigned int aggregatedFoldingFitness = 0;
@@ -153,4 +162,9 @@ void Population::mutation(float mutationRate)
 
 	}
 	
+}
+
+int Population::getBestFitness(void) 
+{
+	return m_BestFitness;
 }

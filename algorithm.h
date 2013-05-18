@@ -11,7 +11,7 @@ public:
 	Algorithm();
 	~Algorithm();
 
-	void run(std::string& sequence, unsigned int populationSize, unsigned int maxGeneration, float mutationRate, float crossoverRate);
+	void run(std::string &sequence, unsigned int populationSize, unsigned int maxGeneration, float mutationRate, float crossoverRate);
     
     Population& getPopulation(void);
 

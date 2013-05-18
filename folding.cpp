@@ -252,6 +252,7 @@ void Folding::draw(int offsetX, int offsetY)
 		}
 		glTranslatef((GLfloat)position.x, (GLfloat)position.y , 0);
 		glutSolidSphere(sphereRadius, 5, 5);	// um leistung zu sparen
+		//glutSolidCube(0.25);
 		glPopMatrix();
 
 		if (i==m_Elements.size()-1) { // Für das letzte Element muss ich keine Verbindung zeichnen
