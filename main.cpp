@@ -161,7 +161,7 @@ void init(void)
     glClearColor(0,0,1, 1.0 );
 	glEnable(GL_DEPTH_TEST);
 
-	myAlgorithm.run(SEQ50, 300, 250, 0.08f, 0.52f);
+	myAlgorithm.run(SEQ20, 5000, 250, 0.08f, 0.52f);
 
 	//myAlgorithm.browsePopulation(std::cout);
 
