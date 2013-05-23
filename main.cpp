@@ -116,7 +116,7 @@ void RenderScene()
 	glCullFace(GL_BACK);
 	glEnable(GL_CULL_FACE);
 
-	myPopulation.draw(30,5);
+	myPopulation.draw(18,5);
 
 	glDisable(GL_CULL_FACE);
 
@@ -161,7 +161,7 @@ void init(void)
     glClearColor(0,0,1, 1.0 );
 	glEnable(GL_DEPTH_TEST);
 
-	myAlgorithm.run(SEQ20, 5000, 250, 0.08f, 0.52f);
+	myAlgorithm.run(SEQ20, 5000, 20, 0.08f, 0.30f);
 
 	//myAlgorithm.browsePopulation(std::cout);
 

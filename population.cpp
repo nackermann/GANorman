@@ -133,7 +133,7 @@ void Population::crossover(float crossoverRate)
 		Folding &crossoverCandidate1 = m_Foldings.at(rand() % m_Foldings.size());
 		Folding &crossoverCandidate2 = m_Foldings.at(rand() % m_Foldings.size());
 	
-		for (unsigned int i = rand() % crossoverCandidate1.getSize(); i < crossoverCandidate1.getSize(); ++i)
+		for (unsigned int i = (unsigned int)(rand() % crossoverCandidate1.getSize()); i < crossoverCandidate1.getSize(); ++i)
 		{
 			std::swap(crossoverCandidate1.getElement(i), crossoverCandidate2.getElement(i));	// std::swap langsam, ersetzen?
 		}
@@ -147,7 +147,7 @@ void Population::mutation(float mutationRate)
 	{
 		Folding &mutationCandidate = m_Foldings.at(rand() % m_Foldings.size());
 
-		unsigned int elementToMutate = rand() % mutationCandidate.getSize();
+		unsigned int elementToMutate = (unsigned int)(rand() % mutationCandidate.getSize());
 
 		Direction &directionToMutate = mutationCandidate.getElement(elementToMutate).getDirection();
 
