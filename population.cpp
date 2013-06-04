@@ -1,14 +1,18 @@
 #include "population.h"
 
+#include "selection.h"
+
 Population::Population()
 	: m_Evaluation(0.f),
 	m_AggregatedFoldingFitness(0),
-	m_BestFolding(NULL)
+	m_BestFolding(NULL),
+    m_Selection(NULL)
 {
 }
 
 Population::~Population()
 {
+    delete m_Selection;
 }
 
 void Population::browse(std::ostream &outputStream) 
@@ -99,65 +103,7 @@ float Population::getEvaluation(void)
 
 void Population::selection(void) 
 {
-    
-    std::vector<Folding> selectedFoldings;
-    
-    int winrate = 80;
-    
-    int k=2;
-    
-    if (k==2) {
-
-        for (unsigned int i=0; i<m_Foldings.size(); ++i) {
-            
-            Folding& randomFolding1 = m_Foldings.at(rand() % m_Foldings.size());
-            
-            Folding& randomFolding2 = m_Foldings.at(rand() % m_Foldings.size());
-            
-            
-            if ( randomFolding1.getFitness() > randomFolding2.getFitness() )
-            {
-                if ((rand() % 101) < winrate) {
-                    selectedFoldings.push_back(randomFolding1);
-                }
-                else
-                {
-                    selectedFoldings.push_back(randomFolding2);
-                }
-            }
-            else
-            {
-                if ((rand() % 101) < winrate) {
-                    selectedFoldings.push_back(randomFolding2);
-                }
-                else
-                {
-                    selectedFoldings.push_back(randomFolding1);
-                }
-            }
-        }
-    }
-    else
-    {
-        
-        for (unsigned int i=0; i<m_Foldings.size(); ++i) {
-            
-            Folding& bestFolding = m_Foldings.at(rand() % m_Foldings.size());
-            
-            for (unsigned int i=0; i<k-1; ++i) {
-                Folding& randomFolding = m_Foldings.at(rand() % m_Foldings.size());
-                if (randomFolding.getFitness() > bestFolding.getFitness()) {
-                    bestFolding = randomFolding;
-                }
-                
-            }
-            
-            selectedFoldings.push_back(bestFolding);
-        }
-        
-    }
-
-    m_Foldings = selectedFoldings;
+    m_Selection->select(*this);
 }
 
 void Population::crossover(float crossoverRate)
@@ -202,4 +148,19 @@ void Population::mutation(float mutationRate)
 Folding& Population::getBestFolding(void)
 {
 	return (*m_BestFolding);
+}
+
+void Population::setSelection(Selection *selection)
+{
+    m_Selection = selection;
+}
+
+std::vector<Folding>& Population::getFoldings(void)
+{
+    return m_Foldings;
+}
+
+unsigned int Population::getAggregatedFoldingFitness(void)
+{
+    return m_AggregatedFoldingFitness;
 }

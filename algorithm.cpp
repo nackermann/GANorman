@@ -12,8 +12,11 @@ Algorithm::~Algorithm()
 {
 }
 
-void Algorithm::run(std::string &sequence, unsigned int populationSize, unsigned int maxGeneration, float mutationRate, float crossoverRate) 
+void Algorithm::run(std::string &sequence, unsigned int populationSize, unsigned int maxGeneration, float mutationRate, float crossoverRate, Selection *selection)
 {
+    m_Population.setSelection(selection);
+    
+    
 	for (unsigned int i = 0; i < populationSize; ++i)	// Faltungen erzeugen, je nachdem wie groß die Population werden soll
 	{
 		m_Population.createRandomFolding(sequence);

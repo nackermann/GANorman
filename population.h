@@ -6,12 +6,7 @@
 
 #include "folding.h"
 
-
-enum Selection {
-    RouletteWheelSelection,
-    TournamentSelection
-};
-
+class Selection;
 
 class Population
 {
@@ -32,6 +27,9 @@ public:
     unsigned long getNumberOfFoldings(void);
 	float getEvaluation(void);
 	Folding& getBestFolding(void);
+    void setSelection(Selection *selection);
+    std::vector<Folding>& getFoldings(void);
+    unsigned int getAggregatedFoldingFitness(void);
 
 	void browse(std::ostream &outputStream);
 
@@ -39,7 +37,8 @@ private:
 	std::vector<Folding> m_Foldings;
 	float m_Evaluation;
 	unsigned int m_AggregatedFoldingFitness;
-    Folding* m_BestFolding;
+    Folding *m_BestFolding;
+    Selection *m_Selection;
 };
 
 
