@@ -6,6 +6,7 @@
 //#include "folding.h"
 //#include "population.h"
 
+
 // benchmark sequences for the 2d HP model
 // 0 = hydrophil, "white"
 // 1 = hydrophob, "black"
@@ -18,6 +19,11 @@ std::string SEQ25 = "0010011000011000011000011";
 std::string SEQ36 = "000110011000001111111001100001100100";
 std::string SEQ48 = "001001100110000011111111110000001100110010011111";
 std::string SEQ50 = "11010101011110100010001000010001000101111010101011";
+std::string SEQ60 = "001110111111110001111111111010001111111111110000111111011010";	// highest:	36
+std::string SEQ64 = "1111111111110101001100110010011001100100110011001010111111111111";	// highest:	42
+std::string SEQ85 = "1111000011111111111100000011111111111100011111111111100011111111111100010011001100101"; // highest: 53
+std::string SEQ100 = "0001100111100111011011011110000000011111100111111000000000101101111111111100111011010010111000000111"; // highest: 50
+std::string SEQ100_2 = "0000001011000001110111110110000110011011111011111111110110111111100000000000111111100101110000001011"; // highest: 48
 
 
 Vector3f eyePos(0,0,5);
@@ -116,7 +122,8 @@ void RenderScene()
 	glCullFace(GL_BACK);
 	glEnable(GL_CULL_FACE);
 
-	myPopulation.draw(30,5);
+	//myPopulation.draw(30,5);
+    myPopulation.getBestFolding().draw(0, 0);
 
 	glDisable(GL_CULL_FACE);
 
@@ -166,7 +173,7 @@ void init(void)
 
 	//myAlgorithm.browsePopulation(std::cout);
 
-	glClearDepth(1); 
+	glClearDepth(1);
 }
 
 int main(int argc, char **argv)

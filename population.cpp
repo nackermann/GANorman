@@ -3,7 +3,7 @@
 Population::Population()
 	: m_Evaluation(0.f),
 	m_AggregatedFoldingFitness(0),
-	m_BestFitness(0)
+	m_BestFolding(NULL)
 {
 }
 
@@ -55,7 +55,7 @@ void Population::draw(int chainDistance, int maxRows)
 
 void Population::evaluate(void)
 {
-	m_BestFitness = 0;
+	m_BestFolding = &m_Foldings.at(0);
 
 
 	for (unsigned int i = 0; i < m_Foldings.size(); ++i)
@@ -63,9 +63,9 @@ void Population::evaluate(void)
 		m_Foldings.at(i).calculatePositionsAndDirections();
 		m_Foldings.at(i).calculateFitnessAndOverlaps();
 
-		if (m_BestFitness<=m_Foldings.at(i).getFitness())
+		if (m_BestFolding->getFitness() < m_Foldings.at(i).getFitness())
 		{
-			m_BestFitness = m_Foldings.at(i).getFitness();
+			m_BestFolding = &m_Foldings.at(i);
 		}
 
 	}
@@ -99,30 +99,65 @@ float Population::getEvaluation(void)
 
 void Population::selection(void) 
 {
-	if (m_AggregatedFoldingFitness==0)
-	{
-		return;
-	}
+    
+    std::vector<Folding> selectedFoldings;
+    
+    int winrate = 80;
+    
+    int k=2;
+    
+    if (k==2) {
 
-	std::vector<Folding> selectedFoldings;
+        for (unsigned int i=0; i<m_Foldings.size(); ++i) {
+            
+            Folding& randomFolding1 = m_Foldings.at(rand() % m_Foldings.size());
+            
+            Folding& randomFolding2 = m_Foldings.at(rand() % m_Foldings.size());
+            
+            
+            if ( randomFolding1.getFitness() > randomFolding2.getFitness() )
+            {
+                if ((rand() % 101) < winrate) {
+                    selectedFoldings.push_back(randomFolding1);
+                }
+                else
+                {
+                    selectedFoldings.push_back(randomFolding2);
+                }
+            }
+            else
+            {
+                if ((rand() % 101) < winrate) {
+                    selectedFoldings.push_back(randomFolding2);
+                }
+                else
+                {
+                    selectedFoldings.push_back(randomFolding1);
+                }
+            }
+        }
+    }
+    else
+    {
+        
+        for (unsigned int i=0; i<m_Foldings.size(); ++i) {
+            
+            Folding& bestFolding = m_Foldings.at(rand() % m_Foldings.size());
+            
+            for (unsigned int i=0; i<k-1; ++i) {
+                Folding& randomFolding = m_Foldings.at(rand() % m_Foldings.size());
+                if (randomFolding.getFitness() > bestFolding.getFitness()) {
+                    bestFolding = randomFolding;
+                }
+                
+            }
+            
+            selectedFoldings.push_back(bestFolding);
+        }
+        
+    }
 
-	for (unsigned int i = 0;i < m_Foldings.size();++i)
-	{
-		int r = rand() % m_AggregatedFoldingFitness;
-		int sumFitness = 0;
-
-		for (unsigned int j = 0; j < m_Foldings.size(); ++j)
-		{
-			sumFitness += m_Foldings.at(j).getFitness();
-			if(sumFitness>r)
-			{
-				selectedFoldings.push_back(m_Foldings.at(j));
-				break;
-			}
-		}
-	}
-
-	m_Foldings = selectedFoldings;
+    m_Foldings = selectedFoldings;
 }
 
 void Population::crossover(float crossoverRate)
@@ -164,7 +199,7 @@ void Population::mutation(float mutationRate)
 	
 }
 
-int Population::getBestFitness(void) 
+Folding& Population::getBestFolding(void)
 {
-	return m_BestFitness;
+	return (*m_BestFolding);
 }

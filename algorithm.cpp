@@ -1,6 +1,7 @@
 #include "algorithm.h"
 
 #include <iostream>
+#include <fstream>
 
 Algorithm::Algorithm()
 {
@@ -19,9 +20,10 @@ void Algorithm::run(std::string &sequence, unsigned int populationSize, unsigned
 	}
 
 	m_Population.evaluate();
-	browseEvaluation(std::cout);
 
 	unsigned int generation = 0;
+    
+    std::ofstream logfile("average.txt");
 
 	while (generation < maxGeneration)
 	{
@@ -30,8 +32,13 @@ void Algorithm::run(std::string &sequence, unsigned int populationSize, unsigned
 		m_Population.crossover(crossoverRate);
 		m_Population.mutation(mutationRate);
 		m_Population.evaluate();
+        std::cout << generation << "\t";
 		browseEvaluation(std::cout);
+        logfile << generation << "\t";
+        browseEvaluation(logfile);
 	}
+    
+    logfile.close();
 }
 
 Population& Algorithm::getPopulation(void)
@@ -46,5 +53,5 @@ void Algorithm::browsePopulation(std::ostream &outputStream)
 
 void Algorithm::browseEvaluation(std::ostream &outputStream) 
 {
-	outputStream << m_Population.getEvaluation() << "\t" << m_Population.getBestFitness() << std::endl;
+	outputStream << m_Population.getEvaluation() << "\t" << m_Population.getBestFolding().getFitness() << std::endl;
 }
