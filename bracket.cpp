@@ -58,3 +58,18 @@ Folding& Bracket::getWinner(void)
         throw -1;
     }
 }
+
+Folding& Bracket::getLoser(void)
+{
+    if (!m_HasFought) {
+        throw -1;
+    }
+    else if (m_Attendee1.second == false)
+    {
+        return *m_Attendee1.first;
+    }
+    else
+    {
+        return *m_Attendee2.first;
+    }
+}

@@ -16,7 +16,6 @@ TournamentSelection::~TournamentSelection()
 void TournamentSelection::select(Population &population)
 {
     std::vector<Folding> selectedFoldings;
-    
     std::vector<Folding> &foldings = population.getFoldings();
     
     if (m_K==2) {
@@ -24,13 +23,10 @@ void TournamentSelection::select(Population &population)
         for (unsigned int i=0; i<foldings.size(); ++i) {
             
             Folding& randomFolding1 = foldings.at(rand() % foldings.size());
-            
             Folding& randomFolding2 = foldings.at(rand() % foldings.size());
             
             Bracket myBracket;
-            
             myBracket.setAttendees(randomFolding1, randomFolding2);
-            
             myBracket.fight(80);
             
             try {
