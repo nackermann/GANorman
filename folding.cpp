@@ -251,7 +251,7 @@ void Folding::draw(int offsetX, int offsetY)
 			glColor3f(1, 1, 1);
 		}
 		glTranslatef((GLfloat)position.x, (GLfloat)position.y , 0);
-		glutSolidSphere(sphereRadius, 5, 5);	// um leistung zu sparen
+		glutSolidSphere(sphereRadius, 50, 50);	// um leistung zu sparen
 		//glutSolidCube(0.25);
 		glPopMatrix();
 
