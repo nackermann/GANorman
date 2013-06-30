@@ -2,6 +2,7 @@
 
 #include "tournamentSelection.h"
 #include "RouletteWheelSelection.h"
+#include "doubleEliminationTournament.h"
 
 // benchmark sequences for the 2d HP model
 // 0 = hydrophil, "white"
@@ -164,7 +165,7 @@ void init(void)
     glClearColor(0,0,1, 1.0 );
 	glEnable(GL_DEPTH_TEST);
 
-	myAlgorithm.run(SEQ50, 5000, 250, 0.08f, 0.30f, new TournamentSelection(2,80));
+	myAlgorithm.run(SEQ50, 5000, 250, 0.08f, 0.30f, new DoubleEliminationTournament(2,80));
     //myAlgorithm.run(SEQ20, 5000, 250, 0.08f, 0.30f, new RouletteWheelSelection());
     //myAlgorithm.run(SEQ50, 5000, 250, 0.04f, 0.25f); // good values for SEQ50
 

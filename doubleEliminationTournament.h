@@ -11,8 +11,8 @@ public:
     virtual void select(Population &population);
     
 public:
-    int m_K;
-    int m_Winrate;
+    unsigned int m_K;
+    unsigned int m_Winrate;
 };
 
 

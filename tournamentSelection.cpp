@@ -27,7 +27,7 @@ void TournamentSelection::select(Population &population)
             
             Bracket myBracket;
             myBracket.setAttendees(randomFolding1, randomFolding2);
-            myBracket.fight(80);
+            myBracket.fight(m_Winrate);
             
             try {
                 selectedFoldings.push_back(myBracket.getWinner());

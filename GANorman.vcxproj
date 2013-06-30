@@ -69,16 +69,26 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="algorithm.cpp" />
+    <ClCompile Include="bracket.cpp" />
+    <ClCompile Include="doubleEliminationTournament.cpp" />
     <ClCompile Include="element.cpp" />
     <ClCompile Include="folding.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="population.cpp" />
+    <ClCompile Include="RouletteWheelSelection.cpp" />
+    <ClCompile Include="selection.cpp" />
+    <ClCompile Include="tournamentSelection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="algorithm.h" />
+    <ClInclude Include="bracket.h" />
+    <ClInclude Include="doubleEliminationTournament.h" />
     <ClInclude Include="element.h" />
     <ClInclude Include="folding.h" />
     <ClInclude Include="population.h" />
+    <ClInclude Include="RouletteWheelSelection.h" />
+    <ClInclude Include="selection.h" />
+    <ClInclude Include="tournamentSelection.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
