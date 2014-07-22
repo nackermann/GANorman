@@ -165,8 +165,8 @@ void init(void)
     glClearColor(0,0,1, 1.0 );
 	glEnable(GL_DEPTH_TEST);
 
-	myAlgorithm.run(SEQ50, 5000, 250, 0.08f, 0.30f, new DoubleEliminationTournament(2,80));
-    //myAlgorithm.run(SEQ20, 5000, 250, 0.08f, 0.30f, new RouletteWheelSelection());
+	//myAlgorithm.run(SEQ50, 5000, 250, 0.08f, 0.30f, new DoubleEliminationTournament(2,80));
+    myAlgorithm.run(SEQ20, 5000, 250, 0.08f, 0.30f, new RouletteWheelSelection());
     //myAlgorithm.run(SEQ50, 5000, 250, 0.04f, 0.25f); // good values for SEQ50
 
 	//myAlgorithm.browsePopulation(std::cout);
@@ -185,7 +185,7 @@ int main(int argc, char **argv)
     
 	glutInitWindowPosition(glutGet(GLUT_SCREEN_WIDTH)/2-width/2,glutGet(GLUT_SCREEN_HEIGHT)/2-height/2);
 	glutInitWindowSize(width,height);
-	glutCreateWindow("Norman Ackermann; Manuel Reinfurt");
+	glutCreateWindow("Norman Ackermann");
     
     glutDisplayFunc(RenderScene);
 	glutReshapeFunc(Reshape);
